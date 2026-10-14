@@ -1,0 +1,16 @@
+# SwiftPM / build output
+.build/
+build/
+*.xcodeproj/xcuserdata/
+.swiftpm/
+
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Claude Code local files
+.claude/
