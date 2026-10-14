@@ -43,12 +43,11 @@ final class LinkStore: ObservableObject {
                   let host = url.host,
                   FaviconService.cached(host: host) == nil,
                   inFlight.insert(host).inserted else { continue }
-            Task { [weak self] in
+            // The task is short-lived, so capturing self strongly is fine; the fetch itself runs off the main actor.
+            Task { @MainActor in
                 await FaviconService.fetch(for: url)
-                await MainActor.run {
-                    self?.inFlight.remove(host)
-                    self?.iconRevision += 1
-                }
+                self.inFlight.remove(host)
+                self.iconRevision += 1
             }
         }
     }
